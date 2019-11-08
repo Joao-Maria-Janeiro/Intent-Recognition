@@ -1,0 +1,7 @@
+https://keras.io/layers/core/
+
+https://techwithtim.net/tutorials/python-neural-networks/creating-a-model/
+
+https://github.com/Joao-Maria-Janeiro/Movie-Recommender/blob/73084f31155a2c183be1216ed73806d9b043da7c/main.py#L11
+
+https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html

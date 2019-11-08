@@ -2,35 +2,32 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 import nltk
-from nltk.stem.lancaster import LancasterStemmer
+from nltk.stem import WordNetLemmatizer 
 import json
 from sklearn.feature_extraction.text import CountVectorizer
+import random
 
-
-stemmer = LancasterStemmer()
+lemmatizer = WordNetLemmatizer() 
 cv = CountVectorizer()
 
 
 with open("intents.json") as file:
     data = json.load(file)
 
-words = []
 labels = []
 patterns_text = []
 patterns_label = []
 
 for intent in data["intents"]:
     for pattern in intent["patterns"]:
-        stemmed = [ stemmer.stem(w.lower()) for w in  nltk.word_tokenize(pattern)]
-        words.extend(stemmed)
-        patterns_text.append(pattern)
+        lemmatized = [ lemmatizer.lemmatize(w.lower()) for w in  nltk.word_tokenize(pattern) if w != "?"]
+        patterns_text.append(' '.join(lemmatized))
         patterns_label.append(intent["tag"])
     
     if intent["tag"] not in labels:
         labels.append(intent["tag"])
     
 
-words = sorted(list(set(words)))
 training = cv.fit_transform(patterns_text).toarray()
 
 labels = sorted(labels)
@@ -48,13 +45,28 @@ for x, patter in enumerate(patterns_text):
 training = np.array(training)
 output = np.array(output)
 
-
 model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(len(training[0]), len(training[1]))),
-    keras.layers.Dense(146, activation="relu"),
-    keras.layers.Dense(len(training[0]), activation="softmax")
+    keras.layers.Dense(len(output[1]), input_shape=(len(training[1]),)),
+    keras.layers.Dense(146, activation='relu'),
+    keras.layers.Dense(len(output[1]), activation="softmax")
 ])
 
-model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+model.compile(optimizer="adam", loss=tf.losses.softmax_cross_entropy, metrics=["accuracy"])
 
 model.fit(training, output, epochs=1000)
+
+tag = ""
+while tag != "goodbye":
+    user_input = input("User: ")
+
+    results = model.predict(cv.transform(
+        [' '.join([ lemmatizer.lemmatize(w.lower()) for w in  nltk.word_tokenize(user_input)])]
+    ).toarray())
+    results_index = np.argmax(results)
+    tag = labels[results_index]
+
+    for intent in data["intents"]:
+        if intent["tag"] == tag:
+            print("Robot: " + random.choice(intent['responses']))
+
+

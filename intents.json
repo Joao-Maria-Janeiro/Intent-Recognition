@@ -10,9 +10,16 @@
                 "responses": ["Sad to see you go :(", "Talk to you later", "Goodbye!"]
         },
         {
-                "tag": "shop",
-                "patterns": ["Show me the price of the green stan smith", "Price of air jordans", "Get pictures of the latest nike kicks", "How much do pharrell hu cost", "how much is a playstation 4", "get me a cheap coat", "Where can I find calvin klein pants", "I'm missing an iphone", "Where are android phones available"],
+                "tag": "price",
+                "patterns": ["Show me the price of the green stan smith", "Price of air jordans", "How much do pharrell hu cost", "how much is a playstation 4", "How much for some adidas kicks", "Price for nike kicks", "What's the price for some nike kicks"],
                 "responses": ["Coming right up"]
+        },
+        {
+                "tag":"images",
+                "patterns":["Get pictures of the latest nike kicks", "Can you get me some iphone photos", "Show me pictures of Tesla cars", "Show me some computer images", "Get me red carpet photos"],
+                "responses": []
         }
    ]
 }
+
+

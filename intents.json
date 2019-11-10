@@ -11,7 +11,7 @@
         },
         {
                 "tag": "price",
-                "patterns": ["Show me the price of the green stan smith", "Price of air jordans", "How much do pharrell hu cost", "how much is a playstation 4", "How much for some adidas kicks", "Price for nike kicks", "What's the price for some nike kicks"],
+                "patterns": ["Show me the price of the green stan smith", "Price of air jordans", "How much do pharrell hu cost", "how much is a playstation 4", "How much for some adidas kicks", "Price for nike kicks", "What's the price for some nike sneakers"],
                 "responses": ["Coming right up"]
         },
         {

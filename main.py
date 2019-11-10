@@ -69,11 +69,9 @@ while tag != "goodbye":
     results_index = np.argmax(results)
     tag = labels[results_index]
 
-    # print("Robot: " + tag)
-
     temp_products = []
 
-    if tag == "price":
+    if tag == "price" or tag == "images":
         for index, row in products.iterrows():
             if str(row["brand"]).lower() in str(lemmatized_user_input[0]):
                 temp_products.append(row["name"])
@@ -81,23 +79,13 @@ while tag != "goodbye":
         for idx, product in enumerate(temp_products):
             print(str(idx) + ": " + product)
         product = products[products.name == temp_products[int(input("Choose a number: "))]]
-        print(str(product["prices.amountMin"].values[0]) + str(product["prices.currency"].values[0]) + " - " + str(product["prices.amountMax"].values[0]) + str(product["prices.currency"].values[0]))
+        if tag == "price":
+            print(str(product["prices.amountMin"].values[0]) + str(product["prices.currency"].values[0]) + " - " + str(product["prices.amountMax"].values[0]) + str(product["prices.currency"].values[0]))
+        else:
+            print("Image URL:" + str(product["imageURLs"].values[0]))
         print("You can find them here: " + str(product["prices.sourceURLs"].values[0]))
-
-            
-
-# "patterns": ["Show me the price of the green stan smith", "Price of air jordans", "Get pictures of the latest nike kicks", "How much do pharrell hu cost", "how much is a playstation 4", "get me a cheap coat", "Where can I find calvin klein pants", "I'm missing an iphone", "Where are android phones available", "Can you get me some candles"],
-
-
-    # for intent in data["intents"]:
-    #     if intent["tag"] == tag:
-    #         if tag == "shop":
-    #             if ("image" or "picture") in  lemmatized_user_input[0]:
-    #             #    print("Robot: What images do you want to see?")
-    #             #    new_input = input("User: ")
-    #             else: 
-    #                 print("Robot: Nothing")
-    #         else:
-    #             print("Robot: " + random.choice(intent['responses']))
-
-
+    else:
+        for intent in data["intents"]:
+            if intent["tag"] == tag:
+                print("Robot: " + random.choice(intent['responses']))
+        

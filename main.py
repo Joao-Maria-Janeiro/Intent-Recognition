@@ -7,44 +7,12 @@ import json
 from sklearn.feature_extraction.text import CountVectorizer
 import random
 import pandas as pd
+import data_handler
 
-lemmatizer = WordNetLemmatizer() 
-cv = CountVectorizer()
-
-
-with open("intents.json") as file:
-    data = json.load(file)
 
 products = pd.read_csv("7004_1.csv", error_bad_lines=False)
 
-labels = []
-patterns_text = []
-patterns_label = []
-
-for intent in data["intents"]:
-    for pattern in intent["patterns"]:
-        lemmatized = [ lemmatizer.lemmatize(w.lower()) for w in  nltk.word_tokenize(pattern) if w != "?"]
-        patterns_text.append(' '.join(lemmatized))
-        patterns_label.append(intent["tag"])
-    
-    if intent["tag"] not in labels:
-        labels.append(intent["tag"])
-    
-
-training = cv.fit_transform(patterns_text).toarray()
-
-labels = sorted(labels)
-
-
-output = []
-out_empty = [0 for _ in range(len(labels))]
-
-for x, patter in enumerate(patterns_text):
-    output_row = out_empty[:]
-    output_row[labels.index(patterns_label[x])] = 1
-
-    output.append(output_row)
-
+training, output, labels, data = data_handler.preprocess_data()
 training = np.array(training)
 output = np.array(output)
 
@@ -61,14 +29,11 @@ model.fit(training, output, epochs=1000)
 tag = ""
 while tag != "goodbye":
     user_input = input("User: ")
-    lemmatized_user_input = [' '.join([ lemmatizer.lemmatize(w.lower()) for w in  nltk.word_tokenize(user_input)])]
-
-    results = model.predict(cv.transform(
-        lemmatized_user_input
-    ).toarray())
+    transformed, lemmatized_user_input = data_handler.handle_predict_data(user_input)
+    results = model.predict(transformed)
     results_index = np.argmax(results)
     tag = labels[results_index]
-
+    
     temp_products = []
 
     if tag == "price" or tag == "images":

@@ -1,13 +1,12 @@
-import numpy as np
 import nltk
 from nltk.stem import WordNetLemmatizer 
 import json
 import random
-import pandas as pd
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import f_classif
+from nltk.corpus import stopwords 
+ 
+stop_words = set(stopwords.words('english')) 
 
 lemmatizer = WordNetLemmatizer() 
 
@@ -38,7 +37,7 @@ def preprocess_data():
 
     for intent in data["intents"]:
         for pattern in intent["patterns"]:
-            lemmatized = [ lemmatizer.lemmatize(w.lower()) for w in  nltk.word_tokenize(pattern) if w != "?"]
+            lemmatized = [ lemmatizer.lemmatize(w.lower()) for w in  nltk.word_tokenize(pattern) if (w != "?" and w not in stop_words)]
             patterns_text.append(' '.join(lemmatized))
             patterns_label.append(intent["tag"])
         

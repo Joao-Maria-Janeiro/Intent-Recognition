@@ -1,10 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-import nltk
-from nltk.stem import WordNetLemmatizer 
-import json
-from sklearn.feature_extraction.text import CountVectorizer
 import random
 import pandas as pd
 import data_handler
@@ -18,7 +14,7 @@ output = np.array(output)
 
 model = keras.Sequential([
     keras.layers.Dense(len(output[1]), input_shape=(len(training[1]),)),
-    keras.layers.Dense(146, activation='relu'),
+    keras.layers.Dense((2/3 * (len(training[1]))) + len(output[1]), activation='relu'),
     keras.layers.Dense(len(output[1]), activation="softmax")
 ])
 

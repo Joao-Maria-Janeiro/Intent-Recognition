@@ -2,7 +2,7 @@
 
 ## Short Description
 
-With this project the objective was, given an user input,recognize what the user intent was, this system is only able to recognize between 4 inputs: greeting, goodbye, price and images. We could feed it more data and make it able to recognize more intents but that was not the main focus of the project.
+With this project the objective was, given an user input, recognize what the user intent was, this system is only able to recognize between 4 inputs: greeting, goodbye, price and images. We could feed it more data and make it able to recognize more intents but that was not the main focus of the project.
 
 We were able to predict the intent quite well given our really small [dataset](https://github.com/Joao-Maria-Janeiro/Intent-Recognition/blob/master/intents.json). Since just recognizing the intent is not the funniest, we built a little chat bot around it, as this is one of the intent recognition's main applications. Our bot is able to get price and images of shoes contained [here](https://github.com/Joao-Maria-Janeiro/Intent-Recognition/blob/master/7004_1.csv), you say the brand and it will give you all the options for that brand, we could have done the product name instead of the brand but some of those names are quite big and complex so the brand was easy enough for the demonstration purpose.
 

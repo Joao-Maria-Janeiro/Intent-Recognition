@@ -20,7 +20,7 @@ The technologies used:
 ## Parameters choices
 
 ### Data preprocessing - [code](https://github.com/Joao-Maria-Janeiro/Intent-Recognition/blob/master/data_handler.py)
-For this project, since our dataset is quite small, using an implementation such as word2vec or BERT would not have the best performance as those methods require a lot of data, so... We will use our trusty friend Bag Of Words. Although bag of words is not very good as it does not save any relationship between words nor does it handle words out of vocabulary well, with our really small dataset it is still our best option.
+For this project, since our dataset is quite small, using an implementation such as BERT would not have the best performance as those methods require a lot of data, neither would word2vec on such a small dataset so... We will use our trusty friend Bag Of Words. Although bag of words is not very good as it does not save any relationship between words nor does it handle words out of vocabulary well, with our really small dataset it is still our best option.
 
 Alright so how will we build this bag of words? First of all we will lemmatize our data using nltk's WordNetLemmatizer, in case you are unfamiliar with lemmatization, it's a technique used to remove inflectional endings and return the base word of a given word (e.g: churches -> church; dogs -> dog; am, are, is -> be ). This is handy as we do not want our results to change based on how the user will conjugate the words, with this lemmatization we remove this issue. We will also make our system case insensitive converting all words to lowercase and also remove all stop words. 
 
